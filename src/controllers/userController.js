@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 
 export const getUserProfile = async (req, res) => {
   try {
-    console.log(req.user.role);
     const userId = req.user.id;
     const user = await prisma.user.findUnique({
       where: { id: userId },
@@ -79,6 +78,10 @@ export const changeUserRole = async (req, res) => {
         username: true,
         role: true,
       },
+    });
+    res.status(200).json({
+      message: "User role updated successfully",
+      user: user,
     });
   } catch (error) {
     console.error("Error changing user role: ", error);
